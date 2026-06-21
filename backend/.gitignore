@@ -1,0 +1,22 @@
+# Dependências
+node_modules/
+
+# Variáveis de ambiente (contém senhas e segredos)
+.env
+.env.local
+.env.*.local
+
+# Código gerado automaticamente pelo Prisma
+generated/
+
+# Logs
+npm-debug.log*
+*.log
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
