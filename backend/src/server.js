@@ -1,6 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./lib/swagger");
 
 const gamesRoutes = require("./routes/gamesRoutes");
 const platformsRoutes = require("./routes/platformsRoutes");
@@ -12,6 +14,9 @@ const PORT = process.env.PORT || 3000;
 // Middlewares globais
 app.use(cors());
 app.use(express.json());
+
+// Documentação Swagger
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Rota de teste raiz
 app.get("/", (req, res) => {
@@ -25,4 +30,5 @@ app.use("/franchises", franchisesRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
+  console.log(`Documentação disponível em http://localhost:${PORT}/api-docs`);
 });
