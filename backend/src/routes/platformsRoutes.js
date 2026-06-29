@@ -7,6 +7,8 @@ const {
   updatePlatform,
   deletePlatform,
 } = require("../controllers/platformsController");
+const authenticate = require("../middlewares/authenticate");
+const authorize = require("../middlewares/authorize");
 
 /**
  * @swagger

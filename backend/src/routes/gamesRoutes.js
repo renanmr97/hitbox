@@ -7,6 +7,17 @@ const {
   updateGame,
   deleteGame,
 } = require("../controllers/gamesController");
+const authenticate = require("../middlewares/authenticate");
+const authorize = require("../middlewares/authorize");
+
+// Rotas públicas (qualquer um pode acessar)
+router.get("/", listGames);
+router.get("/:id", getGameById);
+
+// Rotas protegidas (só ADMIN)
+router.post("/", authenticate, authorize("ADMIN"), createGame);
+router.put("/:id", authenticate, authorize("ADMIN"), updateGame);
+router.delete("/:id", authenticate, authorize("ADMIN"), deleteGame);
 
 /**
  * @swagger

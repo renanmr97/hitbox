@@ -7,6 +7,8 @@ const {
   updateFranchise,
   deleteFranchise,
 } = require("../controllers/franchisesController");
+const authenticate = require("../middlewares/authenticate");
+const authorize = require("../middlewares/authorize");
 
 /**
  * @swagger
