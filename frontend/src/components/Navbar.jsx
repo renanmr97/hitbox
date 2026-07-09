@@ -44,6 +44,9 @@ function Navbar() {
 
         {user ? (
           <>
+            {user.role === "ADMIN" && (
+              <Link to="/admin" style={styles.adminLink}>⚙️ Admin</Link>
+            )}
             <Link to="/profile" style={styles.link}>
               👤 {user.username}
             </Link>
@@ -132,6 +135,15 @@ const styles = {
     borderRadius: "6px",
     cursor: "pointer",
     fontSize: "0.9rem",
+  },
+
+  adminLink: {
+    color: "#e94560",
+    textDecoration: "none",
+    fontSize: "0.9rem",
+    border: "1px solid #e9456044",
+    padding: "0.35rem 0.75rem",
+    borderRadius: "6px",
   },
 };
 
