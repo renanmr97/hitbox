@@ -11,6 +11,7 @@ const franchisesRoutes = require("./routes/franchisesRoutes");
 const listRoutes = require("./routes/listRoutes");
 const usersRoutes = require("./routes/usersRoutes");
 const reviewsRoutes = require("./routes/reviewsRoutes");
+const igdbRoutes = require("./routes/igdbRoutes");
 
 const app = express();
 
@@ -34,5 +35,7 @@ app.use("/franchises", franchisesRoutes);
 app.use("/list", listRoutes);
 app.use("/users", usersRoutes);
 app.use("/reviews", reviewsRoutes);
+app.use("/igdb", igdbRoutes);
+
 
 module.exports = app;
