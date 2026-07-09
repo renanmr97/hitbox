@@ -1,9 +1,19 @@
 const prisma = require("../lib/prisma");
 
-// GET /games — lista todos os jogos
+// GET /games?search=crash — lista jogos, com busca opcional por título
 async function listGames(req, res) {
   try {
+    const { search } = req.query;
+
     const games = await prisma.game.findMany({
+      where: search
+        ? {
+          title: {
+            contains: search,
+            mode: "insensitive", // ignora maiúsculas/minúsculas
+          },
+        }
+        : undefined,
       include: {
         covers: true,
       },
@@ -80,7 +90,7 @@ async function updateGame(req, res) {
     const { title, synopsis, initialReleaseDate, igdbUrl, wikipediaUrl } = req.body;
 
     const existingGame = await prisma.game.findUnique({ where: { id } });
-  
+
     if (!existingGame) {
       return res.status(404).json({ error: "Jogo não encontrado." });
     }
@@ -115,7 +125,7 @@ async function deleteGame(req, res) {
     }
 
     await prisma.game.delete({ where: { id } });
-    
+
     res.status(204).send();
   } catch (error) {
     console.error("Erro ao excluir jogo:", error);
