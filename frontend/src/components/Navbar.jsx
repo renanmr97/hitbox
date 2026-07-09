@@ -86,6 +86,7 @@ const styles = {
   searchForm: {
     display: "flex",
     flex: 1,
+    minWidth: "200px",
     maxWidth: "400px",
     gap: "0",
   },

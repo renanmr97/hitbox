@@ -2,6 +2,35 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import api from "../api/axios";
 
+function GameCard({ game, onClick }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <div
+      style={{
+        ...styles.card,
+        borderColor: hovered ? "#e94560" : "#e9456033",
+        transform: hovered ? "translateY(-4px)" : "translateY(0)",
+        transition: "border-color 0.2s, transform 0.2s",
+      }}
+      onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <h2 style={styles.cardTitle}>{game.title}</h2>
+      {game.synopsis && (
+        <p style={styles.cardSynopsis}>{game.synopsis}</p>
+      )}
+      {game.initialReleaseDate && (
+        <p style={styles.cardDate}>
+          Lançamento:{" "}
+          {new Date(game.initialReleaseDate).toLocaleDateString("pt-BR")}
+        </p>
+      )}
+    </div>
+  );
+}
+
 function GamesPage() {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -64,22 +93,11 @@ function GamesPage() {
       ) : (
         <div style={styles.grid}>
           {games.map((game) => (
-            <div
+            <GameCard
               key={game.id}
-              style={styles.card}
+              game={game}
               onClick={() => navigate(`/games/${game.id}`)}
-            >
-              <h2 style={styles.cardTitle}>{game.title}</h2>
-              {game.synopsis && (
-                <p style={styles.cardSynopsis}>{game.synopsis}</p>
-              )}
-              {game.initialReleaseDate && (
-                <p style={styles.cardDate}>
-                  Lançamento:{" "}
-                  {new Date(game.initialReleaseDate).toLocaleDateString("pt-BR")}
-                </p>
-              )}
-            </div>
+            />
           ))}
         </div>
       )}

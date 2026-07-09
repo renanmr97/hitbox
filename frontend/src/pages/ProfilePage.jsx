@@ -15,8 +15,44 @@ const STATUS_COLORS = {
   PLAYED: "#1a7a4a",
 };
 
+function ProfileGameCard({ item, onClick }) {
+  const [hovered, setHovered] = useState(false);
+  const cover = item.game.covers?.find((c) => c.isPrimary) || item.game.covers?.[0];
+
+  return (
+    <div
+      style={{
+        ...styles.card,
+        borderColor: hovered ? "#e94560" : "#e9456022",
+        transform: hovered ? "translateY(-3px)" : "translateY(0)",
+        transition: "border-color 0.2s, transform 0.2s",
+      }}
+      onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {cover ? (
+        <img src={cover.imageUrl} alt={item.game.title} style={styles.cardCover} />
+      ) : (
+        <div style={styles.noCover}>🎮</div>
+      )}
+      <div style={styles.cardInfo}>
+        <h3 style={styles.cardTitle}>{item.game.title}</h3>
+        <span
+          style={{
+            ...styles.statusBadge,
+            backgroundColor: STATUS_COLORS[item.status],
+          }}
+        >
+          {STATUS_LABELS[item.status]}
+        </span>
+      </div>
+    </div>
+  );
+}
+
 function ProfilePage() {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -37,11 +73,6 @@ function ProfilePage() {
         setLoading(false);
       });
   }, [user]);
-
-  function handleLogout() {
-    logout();
-    navigate("/");
-  }
 
   if (loading) return <p style={styles.message}>Carregando perfil...</p>;
   if (!profile) return <p style={styles.message}>Erro ao carregar perfil.</p>;
@@ -71,9 +102,6 @@ function ProfilePage() {
             </div>
           </div>
         </div>
-        <button style={styles.logoutButton} onClick={handleLogout}>
-          Sair
-        </button>
       </div>
 
       {/* Abas de status */}
@@ -110,41 +138,13 @@ function ProfilePage() {
         </div>
       ) : (
         <div style={styles.grid}>
-          {itemsByStatus.map((item) => {
-            const cover =
-              item.game.covers?.find((c) => c.isPrimary) ||
-              item.game.covers?.[0];
-            return (
-              <div
-                key={item.id}
-                style={styles.card}
-                onClick={() => navigate(`/games/${item.game.id}`)}
-              >
-                {cover ? (
-                  <img
-                    src={cover.imageUrl}
-                    alt={item.game.title}
-                    style={styles.cardCover}
-                  />
-                ) : (
-                  <div style={styles.noCover}>
-                    🎮
-                  </div>
-                )}
-                <div style={styles.cardInfo}>
-                  <h3 style={styles.cardTitle}>{item.game.title}</h3>
-                  <span
-                    style={{
-                      ...styles.statusBadge,
-                      backgroundColor: STATUS_COLORS[item.status],
-                    }}
-                  >
-                    {STATUS_LABELS[item.status]}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
+          {itemsByStatus.map((item) => (
+            <ProfileGameCard
+              key={item.id}
+              item={item}
+              onClick={() => navigate(`/games/${item.game.id}`)}
+            />
+          ))}
         </div>
       )}
 

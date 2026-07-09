@@ -184,9 +184,12 @@ const styles = {
   },
   coverWrapper: {
     flexShrink: 0,
+    width: "100%",
+    maxWidth: "220px",
   },
   cover: {
-    width: "220px",
+    width: "100%",
+    maxWidth: "220px",
     borderRadius: "8px",
     boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
   },
