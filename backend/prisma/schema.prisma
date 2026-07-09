@@ -56,29 +56,43 @@ model Follow {
 // ====================
 
 model Game {
-  id                  String    @id @default(uuid())
-  title               String
-  synopsis            String?
-  initialReleaseDate  DateTime? @map("initial_release_date")
-  igdbUrl             String?   @map("igdb_url")
-  wikipediaUrl        String?   @map("wikipedia_url")
-  createdAt           DateTime  @default(now()) @map("created_at")
-  updatedAt           DateTime  @updatedAt @map("updated_at")
+  id                 String    @id @default(uuid())
+  igdbId             Int?      @unique @map("igdb_id")
+  title              String
+  synopsis           String?
+  initialReleaseDate DateTime? @map("initial_release_date")
+  igdbUrl            String?   @map("igdb_url")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
 
-  covers           Cover[]
-  localizedTitles  LocalizedTitle[]
-  gamePlatforms    GamePlatform[]
-  gameFranchises   GameFranchise[]
-  reviews          Review[]
-  listItems        ListItem[]
+  covers          Cover[]
+  localizedTitles LocalizedTitle[]
+  gamePlatforms   GamePlatform[]
+  gameFranchises  GameFranchise[]
+  gameGenres      GameGenre[]
+  reviews         Review[]
+  listItems       ListItem[]
 
   @@map("games")
 }
 
+enum PlatformType {
+  CONSOLE
+  ARCADE
+  PLATFORM
+  OPERATING_SYSTEM
+  PORTABLE_CONSOLE
+  COMPUTER
+}
+
 model Platform {
-  id      String  @id @default(uuid())
-  name    String  @unique
-  logoUrl String? @map("logo_url")
+  id           String        @id @default(uuid())
+  igdbId       Int?          @unique @map("igdb_id")
+  name         String        @unique
+  logoUrl      String?       @map("logo_url")
+  generation   Int?
+  platformType PlatformType? @map("platform_type")
+  createdAt    DateTime      @default(now()) @map("created_at")
 
   gamePlatforms GamePlatform[]
 
@@ -93,6 +107,28 @@ model Franchise {
   gameFranchises GameFranchise[]
 
   @@map("franchises")
+}
+
+model Genre {
+  id     String @id @default(uuid())
+  igdbId Int?   @unique @map("igdb_id")
+  name   String @unique
+
+  gameGenres GameGenre[]
+
+  @@map("genres")
+}
+
+model GameGenre {
+  id      String @id @default(uuid())
+  gameId  String @map("game_id")
+  genreId String @map("genre_id")
+
+  game  Game  @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  genre Genre @relation(fields: [genreId], references: [id], onDelete: Cascade)
+
+  @@unique([gameId, genreId])
+  @@map("game_genres")
 }
 
 model GamePlatform {

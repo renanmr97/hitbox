@@ -11,6 +11,8 @@ import ProfilePage from "./pages/ProfilePage";
 import AdminPage from "./pages/admin/AdminPage";
 import AdminGamesPage from "./pages/admin/AdminGamesPage";
 import AdminGameFormPage from "./pages/admin/AdminGameFormPage";
+import AdminGenresPage from "./pages/admin/AdminGenresPage";
+import AdminPlatformsPage from "./pages/admin/AdminPlatformsPage";
 
 function App() {
   return (
@@ -56,6 +58,22 @@ function App() {
               element={
                 <ProtectedRoute requiredRole="ADMIN">
                   <AdminGameFormPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/genres"
+              element={
+                <ProtectedRoute requiredRole="ADMIN">
+                  <AdminGenresPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/platforms"
+              element={
+                <ProtectedRoute requiredRole="ADMIN">
+                  <AdminPlatformsPage />
                 </ProtectedRoute>
               }
             />

@@ -12,6 +12,7 @@ const listRoutes = require("./routes/listRoutes");
 const usersRoutes = require("./routes/usersRoutes");
 const reviewsRoutes = require("./routes/reviewsRoutes");
 const igdbRoutes = require("./routes/igdbRoutes");
+const genresRoutes = require("./routes/genresRoutes");
 
 const app = express();
 
@@ -36,6 +37,6 @@ app.use("/list", listRoutes);
 app.use("/users", usersRoutes);
 app.use("/reviews", reviewsRoutes);
 app.use("/igdb", igdbRoutes);
-
+app.use("/genres", genresRoutes);
 
 module.exports = app;
