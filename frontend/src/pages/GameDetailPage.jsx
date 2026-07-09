@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import ListButton from "../components/ListButton";
 
 function GameDetailPage() {
   const { id } = useParams();
@@ -56,6 +57,8 @@ function GameDetailPage() {
         {/* Informações */}
         <div style={styles.info}>
           <h1 style={styles.title}>{game.title}</h1>
+
+          <ListButton gameId={game.id} />
 
           {game.localizedTitles?.length > 0 && (
             <div style={styles.section}>

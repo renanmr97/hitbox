@@ -8,6 +8,7 @@ const authRoutes = require("./routes/authRoutes");
 const gamesRoutes = require("./routes/gamesRoutes");
 const platformsRoutes = require("./routes/platformsRoutes");
 const franchisesRoutes = require("./routes/franchisesRoutes");
+const listRoutes = require("./routes/listRoutes");
 
 const app = express();
 
@@ -29,5 +30,6 @@ app.get("/", (req, res) => {
 app.use("/games", gamesRoutes);
 app.use("/platforms", platformsRoutes);
 app.use("/franchises", franchisesRoutes);
+app.use("/list", listRoutes);
 
 module.exports = app;
