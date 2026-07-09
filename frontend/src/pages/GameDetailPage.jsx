@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import ListButton from "../components/ListButton";
+import ReviewSection from "../components/ReviewSection";
 
 function GameDetailPage() {
   const { id } = useParams();
@@ -150,6 +151,8 @@ function GameDetailPage() {
               ))}
             </div>
           )}
+
+          <ReviewSection gameId={game.id} />
         </div>
       </div>
     </div>

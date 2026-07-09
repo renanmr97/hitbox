@@ -10,7 +10,7 @@ const platformsRoutes = require("./routes/platformsRoutes");
 const franchisesRoutes = require("./routes/franchisesRoutes");
 const listRoutes = require("./routes/listRoutes");
 const usersRoutes = require("./routes/usersRoutes");
-
+const reviewsRoutes = require("./routes/reviewsRoutes");
 
 const app = express();
 
@@ -18,7 +18,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/auth", authRoutes);
-
 
 // Documentação Swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -34,6 +33,6 @@ app.use("/platforms", platformsRoutes);
 app.use("/franchises", franchisesRoutes);
 app.use("/list", listRoutes);
 app.use("/users", usersRoutes);
-
+app.use("/reviews", reviewsRoutes);
 
 module.exports = app;
