@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 
 function GamesPage() {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     api.get("/games")
@@ -29,7 +31,11 @@ function GamesPage() {
       ) : (
         <div style={styles.grid}>
           {games.map((game) => (
-            <div key={game.id} style={styles.card}>
+            <div
+              key={game.id}
+              style={styles.card}
+              onClick={() => navigate(`/games/${game.id}`)}
+            >
               <h2 style={styles.cardTitle}>{game.title}</h2>
               {game.synopsis && (
                 <p style={styles.cardSynopsis}>{game.synopsis}</p>
@@ -70,6 +76,8 @@ const styles = {
     borderRadius: "8px",
     padding: "1.5rem",
     border: "1px solid #e9456033",
+    cursor: "pointer",
+    transition: "border-color 0.2s, transform 0.2s",
   },
   cardTitle: {
     fontSize: "1.2rem",
