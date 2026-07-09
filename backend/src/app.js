@@ -9,6 +9,8 @@ const gamesRoutes = require("./routes/gamesRoutes");
 const platformsRoutes = require("./routes/platformsRoutes");
 const franchisesRoutes = require("./routes/franchisesRoutes");
 const listRoutes = require("./routes/listRoutes");
+const usersRoutes = require("./routes/usersRoutes");
+
 
 const app = express();
 
@@ -31,5 +33,7 @@ app.use("/games", gamesRoutes);
 app.use("/platforms", platformsRoutes);
 app.use("/franchises", franchisesRoutes);
 app.use("/list", listRoutes);
+app.use("/users", usersRoutes);
+
 
 module.exports = app;

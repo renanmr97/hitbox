@@ -21,7 +21,9 @@ function Navbar() {
 
         {user ? (
           <>
-            <span style={styles.username}>👤 {user.username}</span>
+            <Link to="/profile" style={styles.link}>
+              👤 {user.username}
+            </Link>
             <button style={styles.logoutButton} onClick={handleLogout}>
               Sair
             </button>
